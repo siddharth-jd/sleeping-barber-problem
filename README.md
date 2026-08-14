@@ -3,7 +3,7 @@
 [![Language: C](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![Kernel: Linux](https://img.shields.io/badge/Kernel-Linux-orange.svg)](https://www.kernel.org/)
 [![Backend: Flask](https://img.shields.io/badge/Backend-Flask-green.svg)](https://flask.palletsprojects.com/)
-[![License: GPL--2.0](https://img.shields.io/badge/License-GPL--2.0-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
+
 
 A full-stack, kernel-level implementation and interactive visual simulation of Dijkstra's classic **Sleeping Barber Problem** for operating systems and process synchronization. 
 
@@ -154,8 +154,3 @@ The problem is solved in `sleeping_barber_cop.c` using the following kernel prim
 | **Customer FIFO Queue** | `struct list_head waiting_customers` | Prevents customer starvation by storing arrival order. |
 | **Atomic Customer Flag** | `atomic_t customer_waiting` | Signals the barber thread to wake up when a customer arrives. |
 
----
-
-## 📄 License
-
-This project is released under the **GPL-2.0** License.
