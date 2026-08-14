@@ -1,0 +1,1 @@
+savedcmd_/home/kowsalya/Downloads/sleeping_barber/kernel_cop/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/kowsalya/Downloads/sleeping_barber/kernel_cop/Module.symvers -T /home/kowsalya/Downloads/sleeping_barber/kernel_cop/modules.order -i Module.symvers -e 

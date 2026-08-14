@@ -1,0 +1,25 @@
+# Sleeping Barber Performance Summary
+
+Analysis Date: 2025-04-26 23:31:54
+
+## System Status
+Current Status: Running
+Chairs: 0/5 occupied
+Customers Remaining: 0
+
+## Performance Metrics
+Total Customers: 10
+Customers Served: 10 (100.00%)
+Customers Lost: 0 (0.00%)
+
+## Wait Time Metrics
+Average Wait Time: 0.00 seconds
+Maximum Wait Time: 0.03 seconds
+Minimum Wait Time: 0.00 seconds
+
+## Service Time Metrics
+Average Service Time: 0.20 seconds
+Maximum Service Time: 0.28 seconds
+Minimum Service Time: 0.12 seconds
+
+Average Total Time in System: 0.20 seconds

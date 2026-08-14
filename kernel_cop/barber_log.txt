@@ -1,0 +1,86 @@
+Status: Running
+Chairs occupied: 0/5
+Customers served: 10
+Customers lost: 0
+Customers remaining: 0
+
+Event Log:
+[4294860] Barber thread started
+[4294860] Barber going to sleep (haircuts so far: 0)
+[4294860] Simulation started with 5 chairs and 10 customers
+[4294860] Customer generator started, will generate 10 customers
+[4294860] Customer 1 arrived, waiting. Chairs occupied: 1/5
+[4294860] Waking up barber for customer 1
+[4294860] Next customer will arrive in 383 ms
+[4294860] Barber woke up
+[4294860] Barber is cutting hair for customer 1 (waited 2 ms)
+[4294860] Cutting hair for customer 1 will take 124 ms
+[4294860] Finished haircut for customer 1
+[4294860] Barber going to sleep (haircuts so far: 1)
+[4294860] Customer 2 arrived, waiting. Chairs occupied: 1/5
+[4294860] Waking up barber for customer 2
+[4294860] Next customer will arrive in 287 ms
+[4294860] Barber woke up
+[4294860] Barber is cutting hair for customer 2 (waited 1 ms)
+[4294860] Cutting hair for customer 2 will take 179 ms
+[4294860] Finished haircut for customer 2
+[4294860] Barber going to sleep (haircuts so far: 2)
+[4294860] Customer 3 arrived, waiting. Chairs occupied: 1/5
+[4294860] Waking up barber for customer 3
+[4294860] Next customer will arrive in 299 ms
+[4294860] Barber woke up
+[4294860] Barber is cutting hair for customer 3 (waited 0 ms)
+[4294860] Cutting hair for customer 3 will take 161 ms
+[4294861] Finished haircut for customer 3
+[4294861] Barber going to sleep (haircuts so far: 3)
+[4294861] Customer 4 arrived, waiting. Chairs occupied: 1/5
+[4294861] Waking up barber for customer 4
+[4294861] Next customer will arrive in 274 ms
+[4294861] Barber woke up
+[4294861] Barber is cutting hair for customer 4 (waited 1 ms)
+[4294861] Cutting hair for customer 4 will take 280 ms
+[4294861] Customer 5 arrived, waiting. Chairs occupied: 1/5
+[4294861] Next customer will arrive in 289 ms
+[4294861] Finished haircut for customer 4
+[4294861] Barber is cutting hair for customer 5 (waited 7 ms)
+[4294861] Cutting hair for customer 5 will take 145 ms
+[4294861] Finished haircut for customer 5
+[4294861] Barber going to sleep (haircuts so far: 5)
+[4294861] Customer 6 arrived, waiting. Chairs occupied: 1/5
+[4294861] Waking up barber for customer 6
+[4294861] Next customer will arrive in 313 ms
+[4294861] Barber woke up
+[4294861] Barber is cutting hair for customer 6 (waited 0 ms)
+[4294861] Cutting hair for customer 6 will take 275 ms
+[4294862] Finished haircut for customer 6
+[4294862] Barber going to sleep (haircuts so far: 6)
+[4294862] Customer 7 arrived, waiting. Chairs occupied: 1/5
+[4294862] Waking up barber for customer 7
+[4294862] Next customer will arrive in 280 ms
+[4294862] Barber woke up
+[4294862] Barber is cutting hair for customer 7 (waited 0 ms)
+[4294862] Cutting hair for customer 7 will take 131 ms
+[4294862] Finished haircut for customer 7
+[4294862] Barber going to sleep (haircuts so far: 7)
+[4294862] Customer 8 arrived, waiting. Chairs occupied: 1/5
+[4294862] Waking up barber for customer 8
+[4294862] Next customer will arrive in 233 ms
+[4294862] Barber woke up
+[4294862] Barber is cutting hair for customer 8 (waited 0 ms)
+[4294862] Cutting hair for customer 8 will take 267 ms
+[4294862] Customer 9 arrived, waiting. Chairs occupied: 1/5
+[4294862] Next customer will arrive in 366 ms
+[4294862] Finished haircut for customer 8
+[4294862] Barber is cutting hair for customer 9 (waited 32 ms)
+[4294862] Cutting hair for customer 9 will take 125 ms
+[4294862] Finished haircut for customer 9
+[4294862] Barber going to sleep (haircuts so far: 9)
+[4294863] Customer 10 arrived, waiting. Chairs occupied: 1/5
+[4294863] Waking up barber for customer 10
+[4294863] Next customer will arrive in 268 ms
+[4294863] Barber woke up
+[4294863] Barber is cutting hair for customer 10 (waited 0 ms)
+[4294863] Cutting hair for customer 10 will take 278 ms
+[4294863] Customer generator finished - all customers generated
+[4294863] Finished haircut for customer 10
+[4294863] Barber going to sleep (haircuts so far: 10)

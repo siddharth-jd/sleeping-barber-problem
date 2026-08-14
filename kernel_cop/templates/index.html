@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleeping Barber Performance Monitor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .metric-card {
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            padding: 15px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .status-running {
+            background-color: #4CAF50;
+        }
+        .status-stopped {
+            background-color: #f44336;
+        }
+        .chart-container {
+            width: 100%;
+            height: 500px;
+            margin-bottom: 20px;
+        }
+        .log-container {
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        pre {
+            white-space: pre-wrap;
+            margin: 0;
+        }
+        .tab {
+            overflow: hidden;
+            background-color: #f1f1f1;
+            border-radius: 4px 4px 0 0;
+        }
+        .tab button {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            color: black;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .tabcontent {
+            display: none;
+            padding: 20px;
+            border-top: none;
+        }
+        #statusTab {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sleeping Barber Performance Monitor</h1>
+        
+        <div class="card">
+            <div class="controls">
+                <button onclick="sendCommand('start 10')">Start (10 customers)</button>
+                <button onclick="sendCommand('stop')">Stop</button>
+                <button onclick="sendCommand('reset')">Reset</button>
+                <input type="number" id="chairsInput" placeholder="Number of chairs" min="1" value="5">
+                <button onclick="setChairs()">Set Chairs</button>
+                <button onclick="sendCommand('add_customer')">Add Customer</button>
+                <input type="text" id="customCommand" placeholder="Custom command">
+                <button onclick="sendCustomCommand()">Send</button>
+            </div>
+            
+            <div class="metrics">
+                <div class="metric-card">
+                    <div class="metric-label">Status</div>
+                    <div class="metric-value">
+                        <span id="statusIndicator" class="status-indicator"></span>
+                        <span id="statusValue">Unknown</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Chairs Occupied</div>
+                    <div class="metric-value" id="chairsValue">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Customers Served</div>
+                    <div class="metric-value" id="servedValue">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Customers Lost</div>
+                    <div class="metric-value" id="lostValue">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Customers Remaining</div>
+                    <div class="metric-value" id="remainingValue">0</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="tab">
+                <button class="tablinks active" onclick="openTab(event, 'statusTab')">Status & Log</button>
+                <button class="tablinks" onclick="openTab(event, 'performanceTab')">Performance</button>
+            </div>
+            
+            <div id="statusTab" class="tabcontent">
+                <h2>Event Log</h2>
+                <div class="log-container" id="logContainer">
+                    <p>Loading log entries...</p>
+                </div>
+            </div>
+            
+            <div id="performanceTab" class="tabcontent">
+                <h2>Performance Metrics</h2>
+                <div class="chart-container">
+                    <img id="chart" src="" alt="Performance Chart" style="width: 100%;">
+                </div>
+                <h3>Performance Summary</h3>
+                <pre id="performanceSummary">Loading performance data...</pre>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Update interval in milliseconds
+        const UPDATE_INTERVAL = 1000;
+        
+        // Function to open tabs
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+            
+            // Refresh data when switching to performance tab
+            if (tabName === 'performanceTab') {
+                refreshPerformanceData();
+            }
+        }
+        
+        // Function to send command to the server
+        function sendCommand(command) {
+            fetch('/api/command', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ command: command }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    alert('Error: ' + data.message);
+                }
+                // Refresh status after command
+                refreshStatus();
+            })
+            .catch(error => {
+                console.error('Error sending command:', error);
+                alert('Error sending command: ' + error);
+            });
+        }
+        
+        // Function to set chairs
+        function setChairs() {
+            const chairs = document.getElementById('chairsInput').value;
+            if (chairs && chairs > 0) {
+                sendCommand('set_chairs ' + chairs);
+            } else {
+                alert('Please enter a valid number of chairs');
+            }
+        }
+        
+        // Function to send custom command
+        function sendCustomCommand() {
+            const command = document.getElementById('customCommand').value;
+            if (command) {
+                sendCommand(command);
+                document.getElementById('customCommand').value = '';
+            }
+        }
+        
+        // Function to refresh status
+        function refreshStatus() {
+            fetch('/api/status')
+                .then(response => response.json())
+                .then(data => {
+                    // Update status indicator
+                    const statusIndicator = document.getElementById('statusIndicator');
+                    const statusValue = document.getElementById('statusValue');
+                    
+                    if (data.isRunning) {
+                        statusIndicator.className = 'status-indicator status-running';
+                        statusValue.textContent = 'Running';
+                    } else {
+                        statusIndicator.className = 'status-indicator status-stopped';
+                        statusValue.textContent = 'Stopped';
+                    }
+                    
+                    // Update metric values
+                    document.getElementById('chairsValue').textContent = data.latestData.chairs_occupied;
+                    document.getElementById('servedValue').textContent = data.latestData.customers_served;
+                    document.getElementById('lostValue').textContent = data.latestData.customers_lost;
+                    document.getElementById('remainingValue').textContent = data.latestData.customers_remaining;
+                    
+                    // Update log entries
+                    const logContainer = document.getElementById('logContainer');
+                    logContainer.innerHTML = '';
+                    
+                    if (data.logEntries && data.logEntries.length > 0) {
+                        data.logEntries.forEach(entry => {
+                            const p = document.createElement('p');
+                            p.textContent = entry;
+                            logContainer.appendChild(p);
+                        });
+                        
+                        // Scroll to bottom of log
+                        logContainer.scrollTop = logContainer.scrollHeight;
+                    } else {
+                        const p = document.createElement('p');
+                        p.textContent = 'No log entries available.';
+                        logContainer.appendChild(p);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching status:', error);
+                });
+        }
+        
+        // Function to refresh performance data
+        function refreshPerformanceData() {
+            // Fetch performance summary
+            fetch('/api/performance')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('performanceSummary').textContent = data.summary;
+                })
+                .catch(error => {
+                    console.error('Error fetching performance data:', error);
+                });
+                
+            // Fetch chart image (with cache-busting parameter)
+            fetch('/api/chart?t=' + new Date().getTime())
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('chart').src = data.chart_image;
+                })
+                .catch(error => {
+                    console.error('Error fetching chart:', error);
+                });
+        }
+        
+        // Set up periodic refresh
+        function setupRefresh() {
+            // Initial refresh
+            refreshStatus();
+            
+            // Set up periodic refresh
+            setInterval(() => {
+                refreshStatus();
+                
+                // Only refresh performance data if that tab is active
+                if (document.getElementById('performanceTab').style.display === 'block') {
+                    refreshPerformanceData();
+                }
+            }, UPDATE_INTERVAL);
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('load', setupRefresh);
+    </script>
+</body>
+</html>
+        
