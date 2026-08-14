@@ -1,0 +1,42 @@
+# Virtual Environments
+venv/
+flask_env/
+env/
+ENV/
+env.bak/
+venv.bak/
+backend/venv/
+backend/flask_env/
+kernel_cop/venv/
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Linux Kernel Module Build Artifacts
+*.o
+*.ko
+*.mod
+*.mod.c
+*.mod.o
+*.cmd
+.*.cmd
+modules.order
+Module.symvers
+.tmp_versions/
+kernel_cop/.Module.symvers.cmd
+kernel_cop/.modules.order.cmd
+kernel_cop/.sleeping_barber_cop.*
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE & Editor Directories
+.idea/
+.vscode/
+*.swp
+*.swo
